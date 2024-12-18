@@ -12,15 +12,17 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
             public $slug;
             public $intro;
             public $body;
+            public $date;
             
 
 
-            public function __construct($title,$slug,$intro,$body)
+            public function __construct($title,$slug,$intro,$body,$date)
             {
                 $this->title = $title;
                 $this->slug = $slug;
                 $this->intro = $intro;
                 $this->body = $body;
+                $this->date = $date;
             }
 
 
@@ -31,9 +33,9 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
             $files= File::files(resource_path("blogs"));
             return collect($files)->map(function($file){
                 $obj=YamlFrontMatter::parseFile($file);
-                return new Blog($obj->title,$obj->slug,$obj->intro,$obj->body());
+                return new Blog($obj->title,$obj->slug,$obj->intro,$obj->body(),$obj->date);
 
-            });
+            })->sortByDesc('date');
 
             // return array_map(function($file)
             // {
@@ -45,22 +47,29 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 
         }
-        public static function find($slug) 
+        public static function findorFail($slug) 
         {
-            $path =resource_path("blogs/$slug.html");
-                if(!file_exists($path))
-            {
+        //     $path =resource_path("blogs/$slug.html");
+        //         if(!file_exists($path))
+        //     {
                 
-                return redirect('/');
-            }
+        //         return redirect('/');
+        //     }
 
-            return cache()->remember("posts.$slug",120,function() use($path)
-            {
-                return file_get_contents($path );
-            }
-        );
-   
-      
+        //     return cache()->remember("posts.$slug",120,function() use($path)
+        //     {
+        //         return file_get_contents($path );
+        //     }
+        // );
+
+        $blogs = static::all()->firstWhere('slug',$slug);
+
+        if(!$blogs)
+        {
+            return abort('404');
+        }
+        return $blogs;
+
         }
 
 
