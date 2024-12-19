@@ -11,10 +11,10 @@ Route::get('/',function(){
 });
 
 
-Route::get('/blogs/{blog}',function($slug){
+Route::get('/blogs/{id}',function($id){
      
     return view('blog',
-    ['blog' =>Blog::findorFail($slug)
+    ['blog' =>Blog::findorFail($id)
 
     ]);
 
