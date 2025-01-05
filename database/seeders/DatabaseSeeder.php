@@ -4,9 +4,11 @@ namespace Database\Seeders;
 
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,9 +17,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::truncate();
-        Blog::truncate();
-        Category::truncate();
+
+       
 
 
 
@@ -27,9 +28,10 @@ class DatabaseSeeder extends Seeder
 
         $mgmg = User::factory()->create(['name' => "mg mg", 'username' => "mgmg"]);
         $agag = User::factory()->create(['name' => "ag ag", 'username' => "agag"]);
-        Blog::factory(2)->create(['category_id' => $frontend->id, 'user_id' => $mgmg->id]);
+        Blog::factory(count: 2)->create(['category_id' => $frontend->id, 'user_id' => $mgmg->id]);
         Blog::factory(2)->create(['category_id' => $backend->id, 'user_id' => $agag->id]);
-
+        Blog::factory(3)->create();
+        Comment::factory(4)->create();
 
 
         // Blog::create([

@@ -15,8 +15,6 @@ class BlogController extends Controller
             'blogs' => Blog::latest()->filter(request(['search', 'category', 'username']))
                 ->paginate(6)
                 ->withQueryString()
-
-
         ]);
     }
 
@@ -36,5 +34,18 @@ class BlogController extends Controller
     }
 
 
-    
+
+    public function subscriptionHandler(Blog $blog)
+    {   
+
+        
+        if (auth()->user()->isSubcribed($blog)) {
+
+            $blog->unscribe();
+        } else {
+            $blog->subscribe();
+        }
+
+        return back();
+    }
 }

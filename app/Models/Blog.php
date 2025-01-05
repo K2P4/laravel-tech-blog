@@ -11,13 +11,9 @@ class Blog extends Model
 {
 
     use HasFactory;
-    // protected $guarded = [
-    //     'id'
-
-    // ];
 
 
-    protected $with = ['category', 'author'];
+
 
 
     public function scopeFilter($query, $filter)
@@ -56,4 +52,29 @@ class Blog extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+
+    public function subscribedUser()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    public function subscribe()
+    {
+        $this->subscribedUser()->attach(auth()->id());
+    }
+
+    public function unscribe()
+    {
+        $this->subscribedUser()->detach(auth()->id());
+    }
+
+
+   
 }

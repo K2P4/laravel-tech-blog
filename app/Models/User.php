@@ -17,7 +17,6 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $guarded = [];
 
 
 
@@ -58,5 +57,16 @@ class User extends Authenticatable
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
+    }
+
+
+    public function subscribedBlogs()
+    {
+        return $this->belongsToMany(Blog::class);
+    }
+
+    public function isSubcribed($blog)
+    {
+        return auth()->user()->subscribedBlogs && auth()->user()->subscribedBlogs->contains('id', $blog->id);
     }
 }
