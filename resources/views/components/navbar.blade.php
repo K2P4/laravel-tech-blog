@@ -3,15 +3,18 @@
     <div class="container">
       <a class="navbar-brand" href="/">Creative Coder</a>
       <div class="d-flex">
-        <a href="#home" class="nav-link">Home</a>
+        <a href="/" class="nav-link">Home</a>
 
 
         @auth
-        <a href="" class="nav-link">Welcome {{auth()->user()->name}}</a>
+        @can('admin')
+        <a href="/admin/blog/create" class="nav-link">Dashboard</a>
+        @endcan
+        <a href="" class="nav-link">{{auth()->user()->name}}</a>
 
         <form action="/logout" method="POST">
           @csrf
-          <button type="submit" class="btn-link border-none btn nav-link">Logout</button>
+          <button type="submit" class="btn-link border-none  ring-0 nav-link">Logout</button>
         </form>
         @else
         <a href="register" class="nav-link">Register</a>
@@ -23,10 +26,10 @@
 
         @auth
 
-        
+
         <img
           src="{{auth()->user()->avatar}}"
-          
+
           class="rounded-circle  object-cover w-9 h-9"
           alt="">
         @endauth

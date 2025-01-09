@@ -1,8 +1,8 @@
 @props(['blog'])
 
-<div class=" card h-[600px] ">
+<div class=" card h-[600px] rounded-sm ">
   <img
-    src=" https://creativecoder.s3.ap-southeast-1.amazonaws.com/blogs/GOLwpsybfhxH0DW8O6tRvpm4jCR6MZvDtGOFgjq0.jpg"
+    src="/storage/{{$blog->thumbnail}}"
     class="card-img-top"
     alt="..." />
   <div class="card-body">
@@ -22,7 +22,7 @@
 
     </div>
     <p class="card-text line-clamp-4">
-      {{$blog->body}}
+      {!!$blog->intro!!}
     </p>
     <a href="/blogs/{{$blog->slug}}" class="btn btn-primary mt-4">Read More</a>
   </div>

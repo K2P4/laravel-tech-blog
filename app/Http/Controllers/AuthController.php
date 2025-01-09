@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -18,7 +19,7 @@ class AuthController extends Controller
         $formData = request()->validate([
             "name" => 'required | max:255 | min:3 ',
             "username" => ['required', 'min:3', Rule::unique('users', 'username')],
-            "password" => 'required | min:8',
+            "password" => 'required | min:5',
             "email" => ['required', 'email', Rule::unique('users', 'email')],
         ]);
 
@@ -40,7 +41,7 @@ class AuthController extends Controller
         $formData = request()->validate(
             [
                 'email' => ['required', 'email', 'max:255', Rule::exists('users', 'email')],
-                'password' => ['required', 'min:8', 'max:255']
+                'password' => ['required', 'min:5', 'max:255']
             ],
             [
                 'email.required' => "Please enter your email address",
@@ -49,8 +50,16 @@ class AuthController extends Controller
             ]
         );
 
+
+
         // creditendial check password
         if (auth()->attempt($formData)) {
+
+            // Use the gate to check if the user is an admin
+            if (Gate::allows('admin')) {
+                return redirect('/admin/blog/create');
+            }
+
             return redirect('/')->with('success', 'Welcome Back ');
         } else {
             return redirect()->back()->withErrors([

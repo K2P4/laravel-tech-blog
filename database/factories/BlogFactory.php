@@ -25,6 +25,8 @@ class BlogFactory extends Factory
             "intro" => $this->faker->sentence(),
             "slug" => $this->faker->unique()->slug(),
             "body" => $this->faker->paragraph(),
+            'thumbnail' => 'thumbnails/wallpapersden.com_anime-one-piece-hd-monkey-d-luffy-cool_1920x1080.jpg',
+
         ];
     }
 }

@@ -1,8 +1,8 @@
 @props(['blog'])
 
-<div class="text-center  w-[90%] mx-auto">
+<div class="text-center mx-auto">
     <img
-        src="https://creativecoder.s3.ap-southeast-1.amazonaws.com/blogs/GOLwpsybfhxH0DW8O6tRvpm4jCR6MZvDtGOFgjq0.jpg"
+        src="/storage/{{$blog->thumbnail}}"
         class=" text-center object-cover mx-auto"
         alt="..." />
     <div class="card-body">
@@ -25,7 +25,7 @@
         </div>
 
         <p class="w-[70%] text-center mx-auto">
-            {{$blog->body}}
+            {!!$blog->body!!}
         </p>
 
     </div>
