@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "532c522c4a60b51a93727d62ae4f13c4",
+    "content-hash": "c7b3ffdd94772d810870ae4c923ea386",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -3538,6 +3538,44 @@
                 }
             ],
             "time": "2024-04-27T21:32:50+00:00"
+        },
+        {
+            "name": "serverless/vercel_laravel",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/azamat-li/vercel-laravel-configs.git",
+                "reference": "56d8cead561b95f2a1b86501eddbacc4b831e21f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/azamat-li/vercel-laravel-configs/zipball/56d8cead561b95f2a1b86501eddbacc4b831e21f",
+                "reference": "56d8cead561b95f2a1b86501eddbacc4b831e21f",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "serverless\\vercel_laravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "azamat-li",
+                    "email": "azamatalifullstack@gmail.com"
+                }
+            ],
+            "description": "Vercel php configured to be used with Laravel. For making serverless Laravel app with css to be deployed to Vercel.\",",
+            "support": {
+                "issues": "https://github.com/azamat-li/vercel-laravel-configs/issues",
+                "source": "https://github.com/azamat-li/vercel-laravel-configs/tree/master"
+            },
+            "time": "2020-12-23T18:20:28+00:00"
         },
         {
             "name": "spatie/yaml-front-matter",
@@ -9376,7 +9414,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
