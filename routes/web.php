@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [BlogController::class, 'index']);
 
-Route::get('/blogs/{blog:slug}', [BlogController::class, 'show'])->where('blog', '[A-z\d\-_]+');
+Route::get('/blogs/{blog:slug}', [BlogController::class, 'show']);
 Route::post('/blogs/{blog:slug}/comment', [CommentController::class, 'store']);
 Route::get('/register', [AuthController::class, 'create'])->middleware('guest');
 Route::post('/register', [AuthController::class, 'store'])->middleware('guest');
