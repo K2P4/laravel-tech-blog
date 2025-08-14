@@ -4,6 +4,8 @@ use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminUserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -26,4 +28,15 @@ Route::middleware('can:admin')->group(function () {
     Route::delete('/admin/{blog:slug}/delete', [AdminBlogController::class, 'destory'])->can('admin');
     Route::get('/admin/{blog:slug}/edit', [AdminBlogController::class, 'edit'])->can('admin');
     Route::patch('/admin/{blog:slug}/update', [AdminBlogController::class, 'update'])->can('admin');
+
+    // admin categories
+    Route::get('/admin/categories', [AdminCategoryController::class, 'index'])->can('admin');
+    Route::post('/admin/categories', [AdminCategoryController::class, 'store'])->can('admin');
+    Route::get('/admin/categories/{category}/edit', [AdminCategoryController::class, 'edit'])->can('admin');
+    Route::patch('/admin/categories/{category}', [AdminCategoryController::class, 'update'])->can('admin');
+    Route::delete('/admin/categories/{category}', [AdminCategoryController::class, 'destroy'])->can('admin');
+
+    // admin users
+    Route::get('/admin/users', [AdminUserController::class, 'index'])->can('admin');
+    Route::patch('/admin/users/{user}', [AdminUserController::class, 'update'])->can('admin');
 });

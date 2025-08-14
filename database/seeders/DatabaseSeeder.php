@@ -19,14 +19,9 @@ class DatabaseSeeder extends Seeder
     {
 
 
-
-
-
-
         $frontend = Category::factory()->create(['name' => "frontend", 'slug' => 'frontend']);
         $backend = Category::factory()->create(['name' => "backend", 'slug' => 'backend']);
-
-        $mgmg = User::factory()->create(['name' => "mg mg", 'username' => "mgmg", 'is_admin' => 1, 'password' => '12345']);
+        $mgmg = User::factory()->create(['name' => "thura ", 'email'=> "thura@email.com", 'username' => "thura", 'is_admin' => 1, 'password' => '12345']);
         $agag = User::factory()->create(['name' => "ag ag", 'username' => "agag"]);
         Blog::factory(count: 2)->create(['category_id' => $frontend->id, 'user_id' => $mgmg->id]);
         Blog::factory(2)->create(['category_id' => $backend->id, 'user_id' => $agag->id]);

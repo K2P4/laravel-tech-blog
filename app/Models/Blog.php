@@ -74,7 +74,4 @@ class Blog extends Model
     {
         $this->subscribedUser()->detach(auth()->id());
     }
-
-
-   
 }

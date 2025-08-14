@@ -8,11 +8,11 @@
     "routes": [{ "src": "/(.*)", "dest": "/api/index.php" }],
     "outputDirectory": "public/build",
     "env": {
-        "APP_NAME": "Laravel",
+        "APP_NAME": "blog",
         "APP_ENV": "production",
         "APP_KEY": "base64:bMHCLMkNjl6GE/qNBba4kjyXD5g/hrG3xducnDzdaZo=",
         "APP_DEBUG": "false",
-        "APP_URL": "https://laravel-blog-chi.vercel.app",
+        "APP_URL": "https://phyothura-blog.vercel.app",
         "VERCEL_DEMO_MODE": "true",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",

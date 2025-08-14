@@ -21,30 +21,34 @@
                     </thead>
                     <tbody>
                         @foreach ($blogs as $blog)
-                        <tr class="   ">
-                            <td class="  align-middle ">{{$blog->title}}</td>
-                            <td class="  align-middle ">{{$blog->intro}}</td>
-                            <td class="  align-middle ">{{$blog->slug}}</td>
-                            <td class="  align-middle w-full">
-                                <div class="flex align-middle items-center  gap-2">
-                                    <button type="button" class="btn duration-500 active:scale-95 btn-primary w-full">
-                                        <a class="  text-decoration-none text-white" href="/admin/{{$blog->slug}}/edit" target="_blank">Edit</a>
-                                    </button>
-                                    <form id="deleteForm" class="w-full" action="/admin/{{$blog->slug}}/delete" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" id="deleteButton" class="btn btn-danger duration-500 active:scale-95  w-full">Delete</button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
+                            <tr class="   ">
+                                <td class="  align-middle ">{{ $blog->title }}</td>
+                                <td class="  align-middle ">{{ $blog->intro }}</td>
+                                <td class="  align-middle ">{{ $blog->slug }}</td>
+                                <td class="  align-middle w-full">
+                                    <div class="flex align-middle items-center  gap-2">
+                                        <button type="button"
+                                            class="btn duration-500 active:scale-95 btn-primary w-full">
+                                            <a class="  text-decoration-none text-white"
+                                                href="/admin/{{ $blog->slug }}/edit">Edit</a>
+                                        </button>
+                                        <form id="deleteForm" class="w-full" action="/admin/{{ $blog->slug }}/delete"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" id="deleteButton"
+                                                class="btn btn-danger duration-500 active:scale-95  w-full">Delete</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
                         @endforeach
 
 
                     </tbody>
                 </table>
 
-                {{$blogs->Links()}}
+                {{ $blogs->Links() }}
 
             </div>
 
