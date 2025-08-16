@@ -12,7 +12,7 @@
             <x-form.input name='intro' />
         </div>
 
-        <x-form.input name='thumbnail' type='file' />
+    <x-form.input name='thumbnail' type='file' />
 
 
 

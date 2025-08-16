@@ -3,10 +3,14 @@
 <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col h-[560px]">
     <a href="/blogs/{{$blog->slug}}" class="block group">
         <div class="aspect-w-16 aspect-h-9 bg-gray-100 overflow-hidden">
+            @php
+                $thumb = $blog->thumbnail;
+                $thumbSrc = $thumb && (\Illuminate\Support\Str::startsWith($thumb, ['http://', 'https://'])) ? $thumb : ($thumb ? '/storage/' . $thumb : '/logo/thura-logo.png');
+            @endphp
             <img
-                src="/storage/{{$blog->thumbnail}}"
+                src="{{ $thumbSrc }}"
                 alt="{{$blog->title}}"
-                class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                class="object-cover w-full h-[260px]  group-hover:scale-105 transition-transform duration-300"
             />
         </div>
     </a>

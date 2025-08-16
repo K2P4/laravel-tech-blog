@@ -16,7 +16,11 @@
         </div>
 
         <x-form.input name='thumbnail' type='file' />
-        <img src='/storage/{{ $blog->thumbnail }}' class=" h-[180px]  rounded-sm object-center " alt="">
+        @php
+            $thumb = $blog->thumbnail;
+            $thumbSrc = $thumb && (\Illuminate\Support\Str::startsWith($thumb, ['http://', 'https://'])) ? $thumb : ($thumb ? '/storage/' . $thumb : '/logo/thura-logo.png');
+        @endphp
+        <img src="{{ $thumbSrc }}" class=" h-[180px]  rounded-sm object-center " alt="">
 
 
 

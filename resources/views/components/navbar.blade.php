@@ -1,6 +1,6 @@
 <!-- Responsive Navbar -->
 <nav class="bg-dark text-white">
-    <div class="container mx-auto flex items-center justify-between py-2 ">
+    <div class="container mx-auto flex items-center justify-between py-1 ">
         <a class="navbar-brand " href="/">Thura Blog</a>
         <!--mobile -->
         <button id="navbar-toggle" class="md:hidden focus:outline-none">

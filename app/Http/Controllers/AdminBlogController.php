@@ -6,6 +6,7 @@ use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class AdminBlogController extends Controller
 {
@@ -35,7 +36,19 @@ class AdminBlogController extends Controller
         ]);
 
         $formData['user_id'] = auth()->id();
-        $formData['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
+        if (request()->hasFile('thumbnail')) {
+            $file = request()->file('thumbnail');
+            $uploaded = Cloudinary::uploadApi()->upload(
+                $file->getRealPath(),
+                [
+                    'folder' => 'laravel-tech-blog/thumbnails',
+                    'verify' => false
+                ]
+            );
+            $formData['thumbnail'] = $uploaded['secure_url'];
+        } else {
+            $formData['thumbnail'] = null;
+        }
 
         Blog::create($formData);
 
@@ -74,8 +87,6 @@ class AdminBlogController extends Controller
 
     public function update(Blog $blog)
     {
-
-
         $formData = request()->validate([
             "title" => ['required'],
             "body" => ['required'],
@@ -84,7 +95,23 @@ class AdminBlogController extends Controller
             "category_id" => ['required', Rule::exists('categories', 'id')]
         ]);
         $formData['user_id'] = auth()->id();
-        $formData['thumbnail'] = request()->file('thumbnail') ? request()->file('thumbnail')->store('thumbnail') : $blog->thumbnail;
+
+        if (request()->hasFile('thumbnail')) {
+
+            $file = request()->file('thumbnail');
+            $uploaded = Cloudinary::uploadApi()->upload(
+                $file->getRealPath(),
+                [
+                    'folder' => 'laravel-tech-blog/thumbnails',
+                    'verify' => false
+                ]
+
+            );
+
+            $formData['thumbnail'] = $uploaded['secure_url'];
+        } else {
+            $formData['thumbnail'] = $blog->thumbnail;
+        }
         $blog->update($formData);
 
         return redirect('/');

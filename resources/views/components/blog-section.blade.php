@@ -1,7 +1,11 @@
 @props(['blog'])
 
 <div class="text-center mx-auto">
-    <img src="/storage/{{ $blog->thumbnail }}" class=" text-center object-cover mx-auto" alt="..." />
+    @php
+        $thumb = $blog->thumbnail;
+        $thumbSrc = $thumb && (\Illuminate\Support\Str::startsWith($thumb, ['http://', 'https://'])) ? $thumb : ($thumb ? '/storage/' . $thumb : '/logo/thura-logo.png');
+    @endphp
+    <img src="{{ $thumbSrc }}" class=" text-center object-cover mx-auto" alt="..." />
     <div class="card-body">
         <h3 class=" text-3xl   text-bold text-gray-800 "><a href="/blogs/{{ $blog->slug }}">{{ $blog->title }}</a></h3>
         <p class="fs-6  mt-1 ">
