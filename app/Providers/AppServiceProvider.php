@@ -45,5 +45,12 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('admin', function (User $user) {
             return $user && $user->is_admin;
         });
+
+        $compiledPath = '/tmp';
+        if (is_writable($compiledPath)) {
+            config(['view.compiled' => $compiledPath]);
+            config(['cache.stores.file.path' => $compiledPath]);
+            config(['session.files' => $compiledPath]);
+        }
     }
 }
