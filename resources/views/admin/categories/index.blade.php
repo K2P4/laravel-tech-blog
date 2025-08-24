@@ -1,14 +1,16 @@
 <x-layout>
-    <x-background>
-        <div class="flex gap-5">
+    <x-utility.snackbar />
 
-            <x-dashboard.view />
+    <x-background>
+        <div class="flex gap-4">
+
+            <x-layout.admin_navbar />
 
             <div class="w-full">
-                <h1 class=" text-xl mb-2    font-medium  text-dark tracking-wide  mx-auto ">Categories</h1>
+                <h1 class=" text-xl mb-3    font-medium  text-dark tracking-wide  mx-auto ">Categories</h1>
 
                 <form action="/admin/categories" method="POST"
-                    class="card bg-transparent shadow-md px-4 py-3 col-md-10 mb-4">
+                    class="card bg-transparent shadow-md px-4 py-3 col-md-12 mb-4">
                     @csrf
                     <div class="row g-3 align-items-end">
                         <div class="col-md-4">
@@ -27,7 +29,7 @@
                     </div>
                 </form>
 
-                <table class="table col-md-10 mt-3 table-striped ">
+                <table class="table col-md-12 mt-3  ">
                     <thead class="  bg-blue-500 rounded-sm text-white font-normal ">
                         <tr>
                             <th class=" font-medium w-[40%]" scope="col">Name</th>
@@ -36,6 +38,11 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if ($categories->isEmpty())
+                            <tr>
+                                <td colspan="3" class="text-center py-4 text-gray-500">Not Found Categories .</td>
+                            </tr>
+                        @endif
                         @foreach ($categories as $category)
                             <tr>
                                 <td class="align-middle">{{ $category->name }}</td>

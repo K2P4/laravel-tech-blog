@@ -18,7 +18,7 @@
 
         <h6 class="text-gray-500 my-3"> {{ $blog->created_at->diffForHumans() }}</h6>
 
-        <div class="flex items-center gap-3  justify-center my-3 text-capitalize" id="subscribe">
+        <div class="flex items-center gap-4  justify-center my-3 text-capitalize" id="subscribe">
             <button type="button"
                 class=" bg-blue-500 rounded-md active:scale-95 text-white font-medium px-4 py-2   hover:bg-blue-400 transition-all duration-500 "><a
                     class=" text-decoration-none "

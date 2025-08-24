@@ -15,7 +15,7 @@
       <x-blog-card :blog="$blog" />
     </div>
     @empty
-    <p class="text-center text-2xl">No Blogs Found</p>
+    <p class="text-center my-4 text-2xl">No Blogs Found</p>
     @endforelse()
 
 

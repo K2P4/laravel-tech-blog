@@ -15,7 +15,7 @@
         </div>
     </a>
     <div class="flex-1 flex flex-col px-4 py-3">
-        <div class="flex items-center gap-3 mb-4">
+        <div class="flex items-center gap-4 mb-4">
             <a href="/?username={{$blog->author->username}}{{request('search')?'&search='.request('search') : ''}}{{request('category')?'&category='.request('category') : ''}}">
                 <img src="{{ $blog->author->avatar ?? '/default-avatar.png' }}" alt="{{$blog->author->name}}" class="w-12 h-12 rounded-full border object-cover" />
             </a>

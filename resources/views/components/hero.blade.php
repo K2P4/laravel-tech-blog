@@ -13,7 +13,7 @@
                 website တခုလေးဖြစ်ပါတယ် ။
             </p>
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <a href="#subscribe" type="button" class="btn btn-primary btn-lg px-4 gap-3">
+                <a href="#subscribe" type="button" class="btn btn-primary btn-lg px-4 gap-4">
                     Subscribe Now
                 </a>
                 <a type="button" class="btn btn-outline-secondary btn-lg px-4" href="#blogs">

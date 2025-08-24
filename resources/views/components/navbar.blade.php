@@ -14,7 +14,7 @@
             <a href="/" class="nav-link">Home</a>
             @auth
                 @can('admin')
-                    <a href="/admin/blog/create" class="nav-link">Dashboard</a>
+                    <a href="/admin/dashboard/index" class="nav-link">Dashboard</a>
                 @endcan
                 <a href="#" class="nav-link">{{ auth()->user()->name }}</a>
                 <form action="/logout" method="POST" class="inline">

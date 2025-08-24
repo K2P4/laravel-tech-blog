@@ -7,11 +7,7 @@
             <x-form.input name='email' type='email' />
             <x-form.input name='password' type='password' />
 
-
             <button type="submit" class=" border-blue-400   mt-4  py-2 text-md tracking-wide text-white active:scale-95 text-center border bg-blue-500 rounded-md hover:bg-blue-500 transition-transform duration-500">SUBMIT </button>
-
-
-
         </form>
 
 

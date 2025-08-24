@@ -2,57 +2,51 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Blog\StoreBlogRequest;
+use App\Http\Requests\Blog\UpdateBlogRequest;
 use App\Models\Blog;
 use App\Models\Category;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use App\Repositories\AdminBlogRepository;
+use App\Services\CloudinaryService;
+use Illuminate\Support\Facades\Auth;
 
 class AdminBlogController extends Controller
 {
 
+    protected AdminBlogRepository $repo;
+    protected CloudinaryService $cloudinary;
+
+    public function __construct(AdminBlogRepository $repo, CloudinaryService $cloudinary)
+    {
+        $this->repo = $repo;
+        $this->cloudinary = $cloudinary;
+    }
+
     public function create()
     {
         return view(
-            'admin.view',
+            'admin.blogs.store',
             [
                 'categories' => Category::all()
-
             ],
 
         );
     }
 
-    public function store()
+    public function store(StoreBlogRequest $request)
     {
+        $validatedData = $request->validated();
 
-
-        $formData = request()->validate([
-            "title" => ['required'],
-            "body" => ['required'],
-            "slug" => ['required', Rule::unique('blogs', 'slug')],
-            "intro" => ['required'],
-            "category_id" => ['required', Rule::exists('categories', 'id')]
-        ]);
-
-        $formData['user_id'] = auth()->id();
+        $validatedData['user_id'] = Auth::id();
         if (request()->hasFile('thumbnail')) {
             $file = request()->file('thumbnail');
-            $uploaded = Cloudinary::uploadApi()->upload(
-                $file->getRealPath(),
-                [
-                    'folder' => 'laravel-tech-blog/thumbnails',
-                    'verify' => false
-                ]
-            );
-            $formData['thumbnail'] = $uploaded['secure_url'];
+            $validatedData['thumbnail'] = $this->cloudinary->uploadFile($file, 'laravel-tech-blog/thumbnails');
         } else {
-            $formData['thumbnail'] = null;
+            $validatedData['thumbnail'] = null;
         }
 
-        Blog::create($formData);
-
-        return redirect('/');
+        $this->repo->createBlog($validatedData);
+        return redirect('/admin/blogs')->with('success', 'Blog created');
     }
 
 
@@ -60,16 +54,17 @@ class AdminBlogController extends Controller
     {
         return view(
             'admin.blogs.index',
-            ['blogs' => Blog::latest()->paginate(4)]
+            ['blogs' => $this->repo->allBlogs()]
         );
     }
 
 
     public function destory(Blog $blog)
     {
-        $blog->delete();
+        $this->cloudinary->destroyByUrl($blog->thumbnail);
+    $this->repo->deleteById($blog);
 
-        return back();
+    return redirect('/admin/blogs')->with('success', 'Blog deleted');
     }
 
 
@@ -85,35 +80,20 @@ class AdminBlogController extends Controller
     }
 
 
-    public function update(Blog $blog)
+    public function update(UpdateBlogRequest $request, Blog $blog)
     {
-        $formData = request()->validate([
-            "title" => ['required'],
-            "body" => ['required'],
-            "slug" => ['required', Rule::unique('blogs', 'slug')->ignore($blog)],
-            "intro" => ['required'],
-            "category_id" => ['required', Rule::exists('categories', 'id')]
-        ]);
-        $formData['user_id'] = auth()->id();
+        $validatedData = $request->validated();
+        $validatedData['user_id'] = Auth::id();
 
         if (request()->hasFile('thumbnail')) {
 
+            $this->cloudinary->destroyByUrl($blog->thumbnail);
             $file = request()->file('thumbnail');
-            $uploaded = Cloudinary::uploadApi()->upload(
-                $file->getRealPath(),
-                [
-                    'folder' => 'laravel-tech-blog/thumbnails',
-                    'verify' => false
-                ]
-
-            );
-
-            $formData['thumbnail'] = $uploaded['secure_url'];
+            $validatedData['thumbnail'] = $this->cloudinary->uploadFile($file, 'laravel-tech-blog/thumbnails');
         } else {
-            $formData['thumbnail'] = $blog->thumbnail;
+            $validatedData['thumbnail'] = $blog->thumbnail;
         }
-        $blog->update($formData);
-
-        return redirect('/');
+        $this->repo->updateBlog($validatedData, $blog);
+        return redirect('/admin/blogs')->with('success', 'Blog updated');
     }
 }

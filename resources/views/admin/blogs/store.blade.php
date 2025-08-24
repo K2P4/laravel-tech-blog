@@ -5,7 +5,7 @@
         <div class="flex gap-4">
 
             <x-layout.admin_navbar />
-            <x-blogs.update :categories="$categories" :blog="$blog" />
+            <x-blogs.create :categories="$categories" />
 
         </div>
 
