@@ -35,6 +35,7 @@
                                         class="badge {{ $user->is_admin ? 'bg-success' : 'bg-secondary' }}">{{ $user->is_admin ? 'Yes' : 'No' }}</span>
                                 </td>
                                 <td class="align-middle">
+                                    <a href="/admin/users/{{ $user->id }}" class="btn btn-sm btn-secondary mr-2">View</a>
                                     <form action="/admin/users/{{ $user->id }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('PATCH')

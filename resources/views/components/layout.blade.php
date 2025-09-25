@@ -6,7 +6,8 @@
      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
      <title>Thura Blog</title>
-     <link rel="icon" type="image/svg+xml" href="https://img.freepik.com/free-vector/organic-flat-computer-programming-illustration_23-2148955256.jpg?t=st=1755321877~exp=1755325477~hmac=cf8ec9ce8b37c887a654f5b77f6829f92914412d9a64e22b07b101da7545be77&w=1060" />
+     <link rel="icon" type="image/svg+xml"
+         href="https://img.freepik.com/free-vector/organic-flat-computer-programming-illustration_23-2148955256.jpg?t=st=1755321877~exp=1755325477~hmac=cf8ec9ce8b37c887a654f5b77f6829f92914412d9a64e22b07b101da7545be77&w=1060" />
      <link rel="preconnect" href="https://fonts.googleapis.com">
      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
      <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
@@ -24,7 +25,7 @@
 
      <x-navbar />
 
-     <main class="flex-grow-1">
+     <main class="flex-grow-1 mt-20">
          {{ $slot }}
          <div id="app" class=""></div>
      </main>

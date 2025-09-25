@@ -62,9 +62,9 @@ class AdminBlogController extends Controller
     public function destory(Blog $blog)
     {
         $this->cloudinary->destroyByUrl($blog->thumbnail);
-    $this->repo->deleteById($blog);
+        $this->repo->deleteById($blog);
 
-    return redirect('/admin/blogs')->with('success', 'Blog deleted');
+        return redirect('/admin/blogs')->with('success', 'Blog deleted');
     }
 
 

@@ -1,6 +1,6 @@
 @props(['blog'])
 
-<div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col h-[560px]">
+<div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col h-[500px]">
     <a href="/blogs/{{$blog->slug}}" class="block group">
         <div class="aspect-w-16 aspect-h-9 bg-gray-100 overflow-hidden">
             @php
