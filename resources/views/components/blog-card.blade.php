@@ -1,17 +1,21 @@
 @props(['blog'])
 
-<div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col h-[560px]">
+<div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col h-[500px]">
     <a href="/blogs/{{$blog->slug}}" class="block group">
         <div class="aspect-w-16 aspect-h-9 bg-gray-100 overflow-hidden">
+            @php
+                $thumb = $blog->thumbnail;
+                $thumbSrc = $thumb && (\Illuminate\Support\Str::startsWith($thumb, ['http://', 'https://'])) ? $thumb : ($thumb ? '/storage/' . $thumb : '/logo/thura-logo.png');
+            @endphp
             <img
-                src="/storage/{{$blog->thumbnail}}"
+                src="{{ $thumbSrc }}"
                 alt="{{$blog->title}}"
-                class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                class="object-cover w-full h-[260px]  group-hover:scale-105 transition-transform duration-300"
             />
         </div>
     </a>
     <div class="flex-1 flex flex-col px-4 py-3">
-        <div class="flex items-center gap-3 mb-4">
+        <div class="flex items-center gap-4 mb-4">
             <a href="/?username={{$blog->author->username}}{{request('search')?'&search='.request('search') : ''}}{{request('category')?'&category='.request('category') : ''}}">
                 <img src="{{ $blog->author->avatar ?? '/default-avatar.png' }}" alt="{{$blog->author->name}}" class="w-12 h-12 rounded-full border object-cover" />
             </a>

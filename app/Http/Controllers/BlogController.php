@@ -4,44 +4,42 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Category;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use App\Repositories\BlogRepository;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
-    public function index()
+    protected BlogRepository $repo;
+
+    public function __construct(BlogRepository $repo)
     {
-        return view('blogs.index', [
-            'blogs' => Blog::latest()->filter(request(['search', 'category', 'username']))
-                ->paginate(6)
-                ->withQueryString()
-        ]);
+        $this->repo = $repo;
     }
 
-
+    public function index()
+    {
+        $blogs = $this->repo->allBlogs(request(['search','category','username']), 6);
+        return view('blogs.index', ['blogs' => $blogs]);
+    }
 
     public function show(Blog $blog)
     {
-        return view(
-            'blogs.show',
-            [
-                'blog' => $blog,
-                "randomBlogs" => Blog::inRandomOrder()->take(3)->get(),
-                "categories" => Category::all()
-
-            ]
-        );
+        return view('blogs.show', [
+            'blog' => $blog,
+            'randomBlogs' => $this->repo->random(3),
+            'categories' => Category::all()
+        ]);
     }
-
-
 
     public function subscriptionHandler(Blog $blog)
     {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
 
+        $user = Auth::user();
 
-        if (auth()->user()->isSubcribed($blog)) {
-
+        if ($user->isSubcribed($blog)) {
             $blog->unscribe();
         } else {
             $blog->subscribe();
@@ -49,6 +47,4 @@ class BlogController extends Controller
 
         return back();
     }
-
-
 }

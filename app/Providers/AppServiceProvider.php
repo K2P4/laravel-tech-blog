@@ -17,7 +17,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        if (is_null(config('filesystems.disks.cloudinary'))) {
+            config([
+                'filesystems.disks.cloudinary' => [
+                    'driver' => 'cloudinary',
+                    'url' => env('CLOUDINARY_URL'),
+                    'cloud' => env('CLOUDINARY_CLOUD_NAME'),
+                    'key' => env('CLOUDINARY_API_KEY'),
+                    'secret' => env('CLOUDINARY_API_SECRET'),
+                    'secure' => env('CLOUDINARY_SECURE', true),
+                    'throw' => false,
+                ],
+            ]);
+        }
     }
 
     /**
@@ -33,5 +45,12 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('admin', function (User $user) {
             return $user && $user->is_admin;
         });
+
+        $compiledPath = '/tmp';
+        if (is_writable($compiledPath)) {
+            config(['view.compiled' => $compiledPath]);
+            config(['cache.stores.file.path' => $compiledPath]);
+            config(['session.files' => $compiledPath]);
+        }
     }
 }

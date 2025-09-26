@@ -2,28 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Auth;
 
 class AdminUserController extends Controller
 {
+    protected UserRepository $repo;
+
+    public function __construct(UserRepository $repo)
+    {
+        $this->repo = $repo;
+    }
+
+
     public function index()
     {
         return view('admin.users.index', [
-            'users' => User::latest()->paginate(10)
+            'users' => $this->repo->allUsers()
         ]);
     }
 
-    public function update(User $user)
+    public function show(User $user)
     {
-        $attributes = request()->validate([
-            'is_admin' => ['required', 'boolean']
-        ]);
+        $totalSubscribers = $user->blogs->reduce(function ($carry, $blog) {
+            return $carry + ($blog->subscribedUser ? $blog->subscribedUser->count() : 0);
+        }, 0);
 
-        $user->update($attributes);
+        return view('admin.users.show', ['user' => $user, 'totalSubscribers' => $totalSubscribers]);
+    }
 
-        return back();
+
+
+    public function update(UpdateUserRequest $request, User $user)
+    {
+        $validatedData = $request->validated();
+        $this->repo->updateUser($validatedData, $user);
+        return redirect('/admin/users')->with('success', 'User updated');
     }
 }
-
-

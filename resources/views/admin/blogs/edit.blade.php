@@ -1,9 +1,11 @@
 <x-layout>
-    <x-background>
-        <div class="flex gap-5">
+        <x-utility.snackbar />
 
-            <x-dashboard.view />
-            <x-dashboard.update :categories="$categories" :blog="$blog" />
+    <x-background>
+        <div class="flex gap-4">
+
+            <x-layout.admin_navbar />
+            <x-blogs.update :categories="$categories" :blog="$blog" />
 
         </div>
 

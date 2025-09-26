@@ -1,15 +1,22 @@
 @props(['blogs'])
 
 <x-layout>
-    <x-background>
-        <div class="flex gap-5">
+        <x-utility.snackbar />
 
-            <x-dashboard.view />
+    <x-background>
+        <div class="flex gap-4">
+
+            <x-layout.admin_navbar />
 
 
             <div class="w-full">
-                <h1 class=" text-xl mb-2    font-medium  text-dark tracking-wide  mx-auto ">Blog Table</h1>
-                <table class="table col-md-8 mt-3 table-striped ">
+                <div class="flex items-center justify-between mb-1 w-full">
+                    <h1 class=" text-xl     font-medium  text-dark tracking-wide  text-left ">Blogs</h1>
+                    <a href="/admin/blogs/create" class="btn btn-primary">Create Blog</a>
+                </div>
+
+
+                <table class="table col-md-8 mt-2  ">
 
                     <thead class="  bg-blue-500 rounded-sm text-white font-normal ">
                         <tr>
@@ -20,20 +27,24 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if ($blogs->isEmpty())
+                            <tr>
+                                <td colspan="4" class="text-center py-4 text-gray-500">Not Found Blogs</td>
+                            </tr>
+                        @endif
                         @foreach ($blogs as $blog)
-                            <tr class="   ">
+                            <tr class="">
                                 <td class="  align-middle ">{{ $blog->title }}</td>
                                 <td class="  align-middle ">{{ $blog->intro }}</td>
                                 <td class="  align-middle ">{{ $blog->slug }}</td>
                                 <td class="  align-middle w-full">
                                     <div class="flex align-middle items-center  gap-2">
-                                        <button type="button"
-                                            class="btn duration-500 active:scale-95 btn-primary w-full">
-                                            <a class="  text-decoration-none text-white"
-                                                href="/admin/{{ $blog->slug }}/edit">Edit</a>
-                                        </button>
-                                        <form id="deleteForm" class="w-full" action="/admin/{{ $blog->slug }}/delete"
-                                            method="POST">
+                                        <a href="/admin/blogs/{{ $blog->slug }}/edit"
+                                            class="btn  duration-500 active:scale-95 btn-primary w-full">
+                                            <span class="text-decoration-none text-white  ">Edit</span>
+                                        </a>
+                                        <form id="deleteForm" class="w-full"
+                                            action="/admin/blogs/{{ $blog->slug }}/delete" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="button" id="deleteButton"

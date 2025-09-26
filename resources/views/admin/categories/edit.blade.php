@@ -1,14 +1,20 @@
 <x-layout>
-    <x-background>
-        <div class="flex gap-5">
+        <x-utility.snackbar />
 
-            <x-dashboard.view />
+    <x-background>
+        <div class="flex gap-4">
+
+            <x-layout.admin_navbar />
 
             <div class="w-full">
-                <h1 class=" text-xl mb-2    font-medium  text-dark tracking-wide  mx-auto ">Edit Category</h1>
-
+                <div class="flex items-center col-md-12 justify-between mb-2">
+                    <h1 class=" text-xl     font-medium  text-dark tracking-wide  text-left ">Edit Category</h1>
+                    <a href="/admin/categories">
+                        <button class=" btn btn-primary  ">Back</button>
+                    </a>
+                </div>
                 <form action="/admin/categories/{{ $category->id }}" method="POST"
-                    class="card bg-transparent shadow-md px-4 py-3 col-md-10 mb-4">
+                    class="card bg-transparent shadow-md px-4 py-3 col-md-12 mb-4">
                     @csrf
                     @method('PATCH')
                     <div class="row g-3">

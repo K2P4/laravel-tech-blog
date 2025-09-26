@@ -2,29 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Category\StoreCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
+use App\Repositories\AdminCategoryRepository;
 use Illuminate\Validation\Rule;
 
 class AdminCategoryController extends Controller
 {
+
+    protected AdminCategoryRepository $repo;
+
+    public function __construct(AdminCategoryRepository $repo)
+    {
+        $this->repo = $repo;
+    }
+
+
     public function index()
     {
         return view('admin.categories.index', [
-            'categories' => Category::latest()->paginate(10)
+            'categories' => $this->repo->allCategories()
         ]);
     }
 
-    public function store()
+    public function store(StoreCategoryRequest $request)
     {
-        $attributes = request()->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', Rule::unique('categories', 'slug')],
-        ]);
+        $validatedData = $request->validated();
+        $this->repo->createCategory($validatedData);
 
-        Category::create($attributes);
-
-        return back();
+        return redirect('/admin/categories')->with('success', 'Category created');
     }
 
     public function edit(Category $category)
@@ -34,23 +41,16 @@ class AdminCategoryController extends Controller
         ]);
     }
 
-    public function update(Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $attributes = request()->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', Rule::unique('categories', 'slug')->ignore($category->id)],
-        ]);
-
-        $category->update($attributes);
-
-        return redirect('/admin/categories');
+        $validatedData = $request->validated();
+        $this->repo->updateCategory($validatedData, $category);
+        return redirect('/admin/categories')->with('success', 'Category updated');
     }
 
     public function destroy(Category $category)
     {
-        $category->delete();
-        return back();
+        $this->repo->deleteById($category);
+        return redirect('/admin/categories')->with('success', 'Category deleted');
     }
 }
-
-

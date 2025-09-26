@@ -2,31 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    protected UserRepository $repo;
+
+    public function __construct(UserRepository $repo)
+    {
+        $this->repo = $repo;
+    }
+
     public function create()
     {
         return view('auth.register');
     }
 
-    public function store()
+    public function store(RegisterRequest $request)
     {
-        $formData = request()->validate([
-            "name" => 'required | max:255 | min:3 ',
-            "username" => ['required', 'min:3', Rule::unique('users', 'username')],
-            "password" => 'required | min:5',
-            "email" => ['required', 'email', Rule::unique('users', 'email')],
-        ]);
-
-
-        $user = User::create($formData);
-        //login
-        auth()->login($user);
+        $validatedData = $request->validated();
+        $user = $this->repo->createUser($validatedData);
+        Auth::login($user);
 
         return redirect('/')->with('success', 'Welcome Dear ' . $user->name);
     }
@@ -36,28 +36,15 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function post_login()
+    public function post_login(LoginRequest $request)
     {
-        $formData = request()->validate(
-            [
-                'email' => ['required', 'email', 'max:255', Rule::exists('users', 'email')],
-                'password' => ['required', 'min:5', 'max:255']
-            ],
-            [
-                'email.required' => "Please enter your email address",
-                'password.required' => "Please enter your password",
-                'passsword.min' => "Password should be more than 8",
-            ]
-        );
 
+        $validatedData = $request->validated();
 
-
-        // creditendial check password
-        if (auth()->attempt($formData)) {
-
+        if (Auth::attempt($validatedData)) {
             // Use the gate to check if the user is an admin
             if (Gate::allows('admin')) {
-                return redirect('/admin/blog/create');
+                return redirect('/admin/dashboard/index')->with('success', 'Welcome Back Admin ');
             }
 
             return redirect('/')->with('success', 'Welcome Back ');
@@ -71,8 +58,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        //logout
-        auth()->logout();
+        Auth::logout();
         return redirect('/')->with('success', 'Logout Successful');
     }
 }
