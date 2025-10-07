@@ -12,9 +12,7 @@ A **full-featured blog website** built with Laravel that allows users to create,
 - [Features](#features)  
 - [Installation](#installation)  
 - [Configuration](#configuration)  
-- [Database Setup](#database-setup)  
 - [Usage](#usage)  
-- [Contributing](#contributing)  
 - [License](#license)  
 
 ---
@@ -40,6 +38,27 @@ git clone https://github.com/your-username/your-repo.git
 cd your-repo
 composer install
 php artisan key:generate
-php artisan migrate
 php artisan serve
+
+
+## Configuration
+
+**env**
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=blog_db
+DB_USERNAME=root
+DB_PASSWORD=
+
+## Usage
+
+- **Register a new user or login with an existing account.
+- **Admin Panel: Access via /admin for managing users, posts, and comments.
+- **Create & Edit Posts: Use the dashboard to manage content.
+- **Subscriptions:** Users can subscribe to posts or authors to receive notifications.  
+- **Comments & Subscriptions: Engage with posts and subscribe for notifications.
+- **Scribe Mode: Use this mode for enhanced content creation experience.
+
 
