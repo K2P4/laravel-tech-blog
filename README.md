@@ -33,17 +33,17 @@ A **full-featured blog website** built with Laravel that allows users to create,
 
 1. **Clone the repository**:
 
-```bash
+
 git clone https://github.com/your-username/your-repo.git
 cd your-repo
 composer install
 php artisan key:generate
 php artisan serve
 
+---
 
 ## Configuration
 
-**env**
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -51,6 +51,8 @@ DB_PORT=3306
 DB_DATABASE=blog_db
 DB_USERNAME=root
 DB_PASSWORD=
+
+---
 
 ## Usage
 
@@ -61,4 +63,4 @@ DB_PASSWORD=
 - **Comments & Subscriptions: Engage with posts and subscribe for notifications.
 - **Scribe Mode: Use this mode for enhanced content creation experience.
 
-
+---
