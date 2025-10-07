@@ -1,8 +1,7 @@
 # Laravel Blog Website
 
-[![PHP](https://img.shields.io/badge/PHP-8.1-blue)](https://www.php.net/) 
 
-A **full-featured blog website** built with Laravel that allows users to create, edit, and manage posts. It includes subscriptions, scribe mode, comments, an admin panel, notifications, and user authentication (login and logout).  
+A **full-featured blog website** built with Laravel that allows users to create, edit, and manage posts. It includes subscriptions, scribe mode, comments, an admin panel, notifications, and user authentication .  
 
 ---
 
