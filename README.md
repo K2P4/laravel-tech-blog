@@ -52,16 +52,16 @@ DB_DATABASE=blog_db
 DB_USERNAME=root
 DB_PASSWORD=
 ```
----
+
 
 ## Usage
 
 ```bash
-- **Register a new user or login with an existing account.
-- **Admin Panel: Access via /admin for managing users, posts, and comments.
-- **Create & Edit Posts: Use the dashboard to manage content.
-- **Subscriptions:** Users can subscribe to posts or authors to receive notifications.  
-- **Comments & Subscriptions: Engage with posts and subscribe for notifications.
-- **Scribe Mode: Use this mode for enhanced content creation experience.
+- Register a new user or login with an existing account.
+- Admin Panel: Access via /admin for managing users, posts, and comments.
+- Create & Edit Posts: Use the dashboard to manage content.
+- Subscriptions:** Users can subscribe to posts or authors to receive notifications.  
+- Comments & Subscriptions: Engage with posts and subscribe for notifications.
+- Scribe Mode: Use this mode for enhanced content creation experience.
 ```
----
+
